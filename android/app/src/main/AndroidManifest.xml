@@ -90,7 +90,7 @@
 
         <provider
             android:name=".FilesProvider"
-            android:authorities="${applicationName}.provider"
+            android:authorities="${applicationId}.provider"
             android:exported="true"
             android:grantUriPermissions="true"
             android:permission="android.permission.MANAGE_DOCUMENTS"
