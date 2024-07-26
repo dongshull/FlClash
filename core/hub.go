@@ -177,7 +177,7 @@ func changeProxy(s *C.char) {
 		return
 	}
 	adapterProxy := group.(*adapter.Proxy)
-	selector, ok := adapterProxy.ProxyAdapter.(*outboundgroup.Selector)
+	selector, ok := adapterProxy.ProxyAdapter.(outboundgroup.SelectAble)
 	if !ok {
 		return
 	}
