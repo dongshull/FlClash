@@ -70,6 +70,6 @@ double getScrollToSelectedOffset({
     (proxy) => proxy.name == selectedName,
   );
   final selectedIndex = findSelectedIndex != -1 ? findSelectedIndex : 0;
-  final rows = ((selectedIndex - 1) / columns).ceil();
+  final rows = (selectedIndex / columns).floor();
   return max(rows * (getItemHeight(proxyCardType) + 8) - 8, 0);
 }

@@ -310,6 +310,9 @@ class ProxyGroupViewState extends State<ProxyGroupView> {
   }
 
   scrollToSelected() {
+    if(_controller.position.maxScrollExtent == 0){
+      return;
+    }
     _controller.animateTo(
       16 +
           getScrollToSelectedOffset(

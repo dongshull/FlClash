@@ -90,7 +90,7 @@
 
         <provider
             android:name=".FilesProvider"
-            android:authorities="com.follow.clash.provider"
+            android:authorities="${applicationName}.provider"
             android:exported="true"
             android:grantUriPermissions="true"
             android:permission="android.permission.MANAGE_DOCUMENTS"

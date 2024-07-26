@@ -315,7 +315,7 @@ class _ProfileItemState extends State<ProfileItem> {
                   children: [
                     Text(
                       expireShow,
-                      style: textTheme.labelMedium?.toLighter,
+                      style: textTheme.labelMedium?.toLight,
                     ),
                   ],
                 )
@@ -409,14 +409,13 @@ class _ProfileItemState extends State<ProfileItem> {
     final groupValue = widget.groupValue;
     final onChanged = widget.onChanged;
     return CommonCard(
-      child: ListItem.radio(
+      isSelected: profile.id == groupValue,
+      onPressed: (){
+        onChanged(profile.id);
+      },
+      child: ListItem(
         key: Key(profile.id),
         horizontalTitleGap: 16,
-        delegate: RadioDelegate<String?>(
-          value: profile.id,
-          groupValue: groupValue,
-          onChanged: onChanged,
-        ),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         trailing: SizedBox(
           height: 48,

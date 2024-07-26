@@ -35,6 +35,7 @@ Config _$ConfigFromJson(Map<String, dynamic> json) => Config()
   ..autoCheckUpdate = json['autoCheckUpdate'] as bool? ?? true
   ..allowBypass = json['allowBypass'] as bool? ?? true
   ..systemProxy = json['systemProxy'] as bool? ?? false
+  ..onlyProxy = json['onlyProxy'] as bool? ?? false
   ..isCloseConnections = json['isCloseConnections'] as bool? ?? false
   ..proxiesType = $enumDecodeNullable(_$ProxiesTypeEnumMap, json['proxiesType'],
           unknownValue: ProxiesType.tab) ??
@@ -69,6 +70,7 @@ Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
       'autoCheckUpdate': instance.autoCheckUpdate,
       'allowBypass': instance.allowBypass,
       'systemProxy': instance.systemProxy,
+      'onlyProxy': instance.onlyProxy,
       'isCloseConnections': instance.isCloseConnections,
       'proxiesType': _$ProxiesTypeEnumMap[instance.proxiesType]!,
       'proxyCardType': _$ProxyCardTypeEnumMap[instance.proxyCardType]!,

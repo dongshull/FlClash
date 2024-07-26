@@ -85,7 +85,7 @@ class CommonScaffoldState extends State<CommonScaffold> {
   }
 
   @override
-  void didUpdateWidget(covariant CommonScaffold oldWidget) {
+  void didUpdateWidget(CommonScaffold oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.title != widget.title) {
       _actions.value = [];

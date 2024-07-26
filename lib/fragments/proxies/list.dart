@@ -209,6 +209,9 @@ class _ProxiesListFragmentState extends State<ProxiesListFragment> {
   }
 
   _scrollToGroupSelected(String groupName) {
+    if(_controller.position.maxScrollExtent == 0){
+      return;
+    }
     final appController = globalState.appController;
     final currentGroups = appController.appState.currentGroups;
     final groupNames = currentGroups.map((e) => e.name).toList();
@@ -391,6 +394,19 @@ class _ListHeaderState extends State<ListHeader>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+
+  @override
+  void didUpdateWidget(ListHeader oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isExpand != widget.isExpand) {
+      if (isExpand) {
+        _animationController.value = 1.0;
+      }else{
+        _animationController.value = 0.0;
+      }
+    }
   }
 
   @override
