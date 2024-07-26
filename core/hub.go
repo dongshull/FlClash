@@ -164,30 +164,28 @@ func getProxies() *C.char {
 //export changeProxy
 func changeProxy(s *C.char) {
 	paramsString := C.GoString(s)
-	go func() {
-		var params = &ChangeProxyParams{}
-		err := json.Unmarshal([]byte(paramsString), params)
-		if err != nil {
-			log.Infoln("Unmarshal ChangeProxyParams %v", err)
-		}
-		groupName := *params.GroupName
-		proxyName := *params.ProxyName
-		proxies := tunnel.ProxiesWithProviders()
-		group, ok := proxies[groupName]
-		if !ok {
-			return
-		}
-		adapterProxy := group.(*adapter.Proxy)
-		selector, ok := adapterProxy.ProxyAdapter.(*outboundgroup.Selector)
-		if !ok {
-			return
-		}
+	var params = &ChangeProxyParams{}
+	err := json.Unmarshal([]byte(paramsString), params)
+	if err != nil {
+		log.Infoln("Unmarshal ChangeProxyParams %v", err)
+	}
+	groupName := *params.GroupName
+	proxyName := *params.ProxyName
+	proxies := tunnel.ProxiesWithProviders()
+	group, ok := proxies[groupName]
+	if !ok {
+		return
+	}
+	adapterProxy := group.(*adapter.Proxy)
+	selector, ok := adapterProxy.ProxyAdapter.(*outboundgroup.Selector)
+	if !ok {
+		return
+	}
 
-		err = selector.Set(proxyName)
-		if err == nil {
-			log.Infoln("[Selector] %s selected %s", groupName, proxyName)
-		}
-	}()
+	err = selector.Set(proxyName)
+	if err == nil {
+		log.Infoln("[Selector] %s selected %s", groupName, proxyName)
+	}
 }
 
 //export getTraffic

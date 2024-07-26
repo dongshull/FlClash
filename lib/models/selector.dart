@@ -17,6 +17,7 @@ class StartButtonSelectorState with _$StartButtonSelectorState {
 class CheckIpSelectorState with _$CheckIpSelectorState {
   const factory CheckIpSelectorState({
     required bool isInit,
+    required String? currentProfileId,
     required bool isStart,
     required SelectedMap selectedMap,
     required num checkIpNum
@@ -117,6 +118,7 @@ class ProxyGroupSelectorState with _$ProxyGroupSelectorState {
     required ProxiesSortType proxiesSortType,
     required ProxyCardType proxyCardType,
     required num sortNum,
+    required GroupType groupType,
     required List<Proxy> proxies,
     required int columns,
   }) = _ProxyGroupSelectorState;
@@ -152,4 +154,12 @@ class ProxiesListHeaderSelectorState with _$ProxiesListHeaderSelectorState {
     required double offset,
     required int currentIndex,
   }) = _ProxiesListHeaderSelectorState;
+}
+
+@freezed
+class CurrentGroupProxyNameSelectorState with _$CurrentGroupProxyNameSelectorState {
+  const factory CurrentGroupProxyNameSelectorState({
+    required String? proxyName,
+    required String? proxyName2,
+  }) = _CurrentGroupProxyNameSelectorState;
 }

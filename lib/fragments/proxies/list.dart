@@ -140,17 +140,13 @@ class _ProxiesListFragmentState extends State<ProxiesListFragment> {
           final children = proxies
               .map<Widget>(
                 (proxy) => Flexible(
-                  child: currentProxyNameBuilder(
-                      groupName: group.name,
-                      builder: (currentProxyName) {
-                        return ProxyCard(
-                          type: type,
-                          isSelected: currentProxyName == proxy.name,
-                          key: ValueKey('$groupName.${proxy.name}'),
-                          proxy: proxy,
-                          groupName: groupName,
-                        );
-                      }),
+                  child: ProxyCard(
+                    type: type,
+                    groupType: group.type,
+                    key: ValueKey('$groupName.${proxy.name}'),
+                    proxy: proxy,
+                    groupName: groupName,
+                  ),
                 ),
               )
               .fill(
@@ -209,7 +205,7 @@ class _ProxiesListFragmentState extends State<ProxiesListFragment> {
   }
 
   _scrollToGroupSelected(String groupName) {
-    if(_controller.position.maxScrollExtent == 0){
+    if (_controller.position.maxScrollExtent == 0) {
       return;
     }
     final appController = globalState.appController;
@@ -396,14 +392,13 @@ class _ListHeaderState extends State<ListHeader>
     super.dispose();
   }
 
-
   @override
   void didUpdateWidget(ListHeader oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.isExpand != widget.isExpand) {
       if (isExpand) {
         _animationController.value = 1.0;
-      }else{
+      } else {
         _animationController.value = 0.0;
       }
     }
@@ -446,9 +441,11 @@ class _ListHeaderState extends State<ListHeader>
                         ),
                         Flexible(
                           flex: 1,
-                          child: currentProxyNameBuilder(
+                          child: currentGroupProxyNameBuilder(
                             groupName: groupName,
-                            builder: (value) {
+                            builder: (state) {
+                              final value =
+                                  state.proxyName ?? state.proxyName2 ?? '';
                               return Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,

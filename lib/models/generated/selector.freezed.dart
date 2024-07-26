@@ -159,6 +159,7 @@ abstract class _StartButtonSelectorState implements StartButtonSelectorState {
 /// @nodoc
 mixin _$CheckIpSelectorState {
   bool get isInit => throw _privateConstructorUsedError;
+  String? get currentProfileId => throw _privateConstructorUsedError;
   bool get isStart => throw _privateConstructorUsedError;
   Map<String, String> get selectedMap => throw _privateConstructorUsedError;
   num get checkIpNum => throw _privateConstructorUsedError;
@@ -176,6 +177,7 @@ abstract class $CheckIpSelectorStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isInit,
+      String? currentProfileId,
       bool isStart,
       Map<String, String> selectedMap,
       num checkIpNum});
@@ -196,6 +198,7 @@ class _$CheckIpSelectorStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? isInit = null,
+    Object? currentProfileId = freezed,
     Object? isStart = null,
     Object? selectedMap = null,
     Object? checkIpNum = null,
@@ -205,6 +208,10 @@ class _$CheckIpSelectorStateCopyWithImpl<$Res,
           ? _value.isInit
           : isInit // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentProfileId: freezed == currentProfileId
+          ? _value.currentProfileId
+          : currentProfileId // ignore: cast_nullable_to_non_nullable
+              as String?,
       isStart: null == isStart
           ? _value.isStart
           : isStart // ignore: cast_nullable_to_non_nullable
@@ -231,6 +238,7 @@ abstract class _$$CheckIpSelectorStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool isInit,
+      String? currentProfileId,
       bool isStart,
       Map<String, String> selectedMap,
       num checkIpNum});
@@ -248,6 +256,7 @@ class __$$CheckIpSelectorStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isInit = null,
+    Object? currentProfileId = freezed,
     Object? isStart = null,
     Object? selectedMap = null,
     Object? checkIpNum = null,
@@ -257,6 +266,10 @@ class __$$CheckIpSelectorStateImplCopyWithImpl<$Res>
           ? _value.isInit
           : isInit // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentProfileId: freezed == currentProfileId
+          ? _value.currentProfileId
+          : currentProfileId // ignore: cast_nullable_to_non_nullable
+              as String?,
       isStart: null == isStart
           ? _value.isStart
           : isStart // ignore: cast_nullable_to_non_nullable
@@ -278,6 +291,7 @@ class __$$CheckIpSelectorStateImplCopyWithImpl<$Res>
 class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
   const _$CheckIpSelectorStateImpl(
       {required this.isInit,
+      required this.currentProfileId,
       required this.isStart,
       required final Map<String, String> selectedMap,
       required this.checkIpNum})
@@ -285,6 +299,8 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
 
   @override
   final bool isInit;
+  @override
+  final String? currentProfileId;
   @override
   final bool isStart;
   final Map<String, String> _selectedMap;
@@ -300,7 +316,7 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
 
   @override
   String toString() {
-    return 'CheckIpSelectorState(isInit: $isInit, isStart: $isStart, selectedMap: $selectedMap, checkIpNum: $checkIpNum)';
+    return 'CheckIpSelectorState(isInit: $isInit, currentProfileId: $currentProfileId, isStart: $isStart, selectedMap: $selectedMap, checkIpNum: $checkIpNum)';
   }
 
   @override
@@ -309,6 +325,8 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
         (other.runtimeType == runtimeType &&
             other is _$CheckIpSelectorStateImpl &&
             (identical(other.isInit, isInit) || other.isInit == isInit) &&
+            (identical(other.currentProfileId, currentProfileId) ||
+                other.currentProfileId == currentProfileId) &&
             (identical(other.isStart, isStart) || other.isStart == isStart) &&
             const DeepCollectionEquality()
                 .equals(other._selectedMap, _selectedMap) &&
@@ -317,8 +335,8 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isInit, isStart,
-      const DeepCollectionEquality().hash(_selectedMap), checkIpNum);
+  int get hashCode => Object.hash(runtimeType, isInit, currentProfileId,
+      isStart, const DeepCollectionEquality().hash(_selectedMap), checkIpNum);
 
   @JsonKey(ignore: true)
   @override
@@ -332,12 +350,15 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
 abstract class _CheckIpSelectorState implements CheckIpSelectorState {
   const factory _CheckIpSelectorState(
       {required final bool isInit,
+      required final String? currentProfileId,
       required final bool isStart,
       required final Map<String, String> selectedMap,
       required final num checkIpNum}) = _$CheckIpSelectorStateImpl;
 
   @override
   bool get isInit;
+  @override
+  String? get currentProfileId;
   @override
   bool get isStart;
   @override
@@ -2012,6 +2033,7 @@ mixin _$ProxyGroupSelectorState {
   ProxiesSortType get proxiesSortType => throw _privateConstructorUsedError;
   ProxyCardType get proxyCardType => throw _privateConstructorUsedError;
   num get sortNum => throw _privateConstructorUsedError;
+  GroupType get groupType => throw _privateConstructorUsedError;
   List<Proxy> get proxies => throw _privateConstructorUsedError;
   int get columns => throw _privateConstructorUsedError;
 
@@ -2030,6 +2052,7 @@ abstract class $ProxyGroupSelectorStateCopyWith<$Res> {
       {ProxiesSortType proxiesSortType,
       ProxyCardType proxyCardType,
       num sortNum,
+      GroupType groupType,
       List<Proxy> proxies,
       int columns});
 }
@@ -2051,6 +2074,7 @@ class _$ProxyGroupSelectorStateCopyWithImpl<$Res,
     Object? proxiesSortType = null,
     Object? proxyCardType = null,
     Object? sortNum = null,
+    Object? groupType = null,
     Object? proxies = null,
     Object? columns = null,
   }) {
@@ -2067,6 +2091,10 @@ class _$ProxyGroupSelectorStateCopyWithImpl<$Res,
           ? _value.sortNum
           : sortNum // ignore: cast_nullable_to_non_nullable
               as num,
+      groupType: null == groupType
+          ? _value.groupType
+          : groupType // ignore: cast_nullable_to_non_nullable
+              as GroupType,
       proxies: null == proxies
           ? _value.proxies
           : proxies // ignore: cast_nullable_to_non_nullable
@@ -2092,6 +2120,7 @@ abstract class _$$ProxyGroupSelectorStateImplCopyWith<$Res>
       {ProxiesSortType proxiesSortType,
       ProxyCardType proxyCardType,
       num sortNum,
+      GroupType groupType,
       List<Proxy> proxies,
       int columns});
 }
@@ -2112,6 +2141,7 @@ class __$$ProxyGroupSelectorStateImplCopyWithImpl<$Res>
     Object? proxiesSortType = null,
     Object? proxyCardType = null,
     Object? sortNum = null,
+    Object? groupType = null,
     Object? proxies = null,
     Object? columns = null,
   }) {
@@ -2128,6 +2158,10 @@ class __$$ProxyGroupSelectorStateImplCopyWithImpl<$Res>
           ? _value.sortNum
           : sortNum // ignore: cast_nullable_to_non_nullable
               as num,
+      groupType: null == groupType
+          ? _value.groupType
+          : groupType // ignore: cast_nullable_to_non_nullable
+              as GroupType,
       proxies: null == proxies
           ? _value._proxies
           : proxies // ignore: cast_nullable_to_non_nullable
@@ -2147,6 +2181,7 @@ class _$ProxyGroupSelectorStateImpl implements _ProxyGroupSelectorState {
       {required this.proxiesSortType,
       required this.proxyCardType,
       required this.sortNum,
+      required this.groupType,
       required final List<Proxy> proxies,
       required this.columns})
       : _proxies = proxies;
@@ -2157,6 +2192,8 @@ class _$ProxyGroupSelectorStateImpl implements _ProxyGroupSelectorState {
   final ProxyCardType proxyCardType;
   @override
   final num sortNum;
+  @override
+  final GroupType groupType;
   final List<Proxy> _proxies;
   @override
   List<Proxy> get proxies {
@@ -2170,7 +2207,7 @@ class _$ProxyGroupSelectorStateImpl implements _ProxyGroupSelectorState {
 
   @override
   String toString() {
-    return 'ProxyGroupSelectorState(proxiesSortType: $proxiesSortType, proxyCardType: $proxyCardType, sortNum: $sortNum, proxies: $proxies, columns: $columns)';
+    return 'ProxyGroupSelectorState(proxiesSortType: $proxiesSortType, proxyCardType: $proxyCardType, sortNum: $sortNum, groupType: $groupType, proxies: $proxies, columns: $columns)';
   }
 
   @override
@@ -2183,13 +2220,21 @@ class _$ProxyGroupSelectorStateImpl implements _ProxyGroupSelectorState {
             (identical(other.proxyCardType, proxyCardType) ||
                 other.proxyCardType == proxyCardType) &&
             (identical(other.sortNum, sortNum) || other.sortNum == sortNum) &&
+            (identical(other.groupType, groupType) ||
+                other.groupType == groupType) &&
             const DeepCollectionEquality().equals(other._proxies, _proxies) &&
             (identical(other.columns, columns) || other.columns == columns));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, proxiesSortType, proxyCardType,
-      sortNum, const DeepCollectionEquality().hash(_proxies), columns);
+  int get hashCode => Object.hash(
+      runtimeType,
+      proxiesSortType,
+      proxyCardType,
+      sortNum,
+      groupType,
+      const DeepCollectionEquality().hash(_proxies),
+      columns);
 
   @JsonKey(ignore: true)
   @override
@@ -2204,6 +2249,7 @@ abstract class _ProxyGroupSelectorState implements ProxyGroupSelectorState {
       {required final ProxiesSortType proxiesSortType,
       required final ProxyCardType proxyCardType,
       required final num sortNum,
+      required final GroupType groupType,
       required final List<Proxy> proxies,
       required final int columns}) = _$ProxyGroupSelectorStateImpl;
 
@@ -2213,6 +2259,8 @@ abstract class _ProxyGroupSelectorState implements ProxyGroupSelectorState {
   ProxyCardType get proxyCardType;
   @override
   num get sortNum;
+  @override
+  GroupType get groupType;
   @override
   List<Proxy> get proxies;
   @override
@@ -2798,5 +2846,156 @@ abstract class _ProxiesListHeaderSelectorState
   @JsonKey(ignore: true)
   _$$ProxiesListHeaderSelectorStateImplCopyWith<
           _$ProxiesListHeaderSelectorStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CurrentGroupProxyNameSelectorState {
+  String? get proxyName => throw _privateConstructorUsedError;
+  String? get proxyName2 => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CurrentGroupProxyNameSelectorStateCopyWith<
+          CurrentGroupProxyNameSelectorState>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CurrentGroupProxyNameSelectorStateCopyWith<$Res> {
+  factory $CurrentGroupProxyNameSelectorStateCopyWith(
+          CurrentGroupProxyNameSelectorState value,
+          $Res Function(CurrentGroupProxyNameSelectorState) then) =
+      _$CurrentGroupProxyNameSelectorStateCopyWithImpl<$Res,
+          CurrentGroupProxyNameSelectorState>;
+  @useResult
+  $Res call({String? proxyName, String? proxyName2});
+}
+
+/// @nodoc
+class _$CurrentGroupProxyNameSelectorStateCopyWithImpl<$Res,
+        $Val extends CurrentGroupProxyNameSelectorState>
+    implements $CurrentGroupProxyNameSelectorStateCopyWith<$Res> {
+  _$CurrentGroupProxyNameSelectorStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? proxyName = freezed,
+    Object? proxyName2 = freezed,
+  }) {
+    return _then(_value.copyWith(
+      proxyName: freezed == proxyName
+          ? _value.proxyName
+          : proxyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      proxyName2: freezed == proxyName2
+          ? _value.proxyName2
+          : proxyName2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CurrentGroupProxyNameSelectorStateImplCopyWith<$Res>
+    implements $CurrentGroupProxyNameSelectorStateCopyWith<$Res> {
+  factory _$$CurrentGroupProxyNameSelectorStateImplCopyWith(
+          _$CurrentGroupProxyNameSelectorStateImpl value,
+          $Res Function(_$CurrentGroupProxyNameSelectorStateImpl) then) =
+      __$$CurrentGroupProxyNameSelectorStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? proxyName, String? proxyName2});
+}
+
+/// @nodoc
+class __$$CurrentGroupProxyNameSelectorStateImplCopyWithImpl<$Res>
+    extends _$CurrentGroupProxyNameSelectorStateCopyWithImpl<$Res,
+        _$CurrentGroupProxyNameSelectorStateImpl>
+    implements _$$CurrentGroupProxyNameSelectorStateImplCopyWith<$Res> {
+  __$$CurrentGroupProxyNameSelectorStateImplCopyWithImpl(
+      _$CurrentGroupProxyNameSelectorStateImpl _value,
+      $Res Function(_$CurrentGroupProxyNameSelectorStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? proxyName = freezed,
+    Object? proxyName2 = freezed,
+  }) {
+    return _then(_$CurrentGroupProxyNameSelectorStateImpl(
+      proxyName: freezed == proxyName
+          ? _value.proxyName
+          : proxyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      proxyName2: freezed == proxyName2
+          ? _value.proxyName2
+          : proxyName2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CurrentGroupProxyNameSelectorStateImpl
+    implements _CurrentGroupProxyNameSelectorState {
+  const _$CurrentGroupProxyNameSelectorStateImpl(
+      {required this.proxyName, required this.proxyName2});
+
+  @override
+  final String? proxyName;
+  @override
+  final String? proxyName2;
+
+  @override
+  String toString() {
+    return 'CurrentGroupProxyNameSelectorState(proxyName: $proxyName, proxyName2: $proxyName2)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CurrentGroupProxyNameSelectorStateImpl &&
+            (identical(other.proxyName, proxyName) ||
+                other.proxyName == proxyName) &&
+            (identical(other.proxyName2, proxyName2) ||
+                other.proxyName2 == proxyName2));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, proxyName, proxyName2);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CurrentGroupProxyNameSelectorStateImplCopyWith<
+          _$CurrentGroupProxyNameSelectorStateImpl>
+      get copyWith => __$$CurrentGroupProxyNameSelectorStateImplCopyWithImpl<
+          _$CurrentGroupProxyNameSelectorStateImpl>(this, _$identity);
+}
+
+abstract class _CurrentGroupProxyNameSelectorState
+    implements CurrentGroupProxyNameSelectorState {
+  const factory _CurrentGroupProxyNameSelectorState(
+          {required final String? proxyName,
+          required final String? proxyName2}) =
+      _$CurrentGroupProxyNameSelectorStateImpl;
+
+  @override
+  String? get proxyName;
+  @override
+  String? get proxyName2;
+  @override
+  @JsonKey(ignore: true)
+  _$$CurrentGroupProxyNameSelectorStateImplCopyWith<
+          _$CurrentGroupProxyNameSelectorStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

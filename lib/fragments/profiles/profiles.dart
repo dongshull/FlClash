@@ -476,7 +476,6 @@ class _ProfileItemState extends State<ProfileItem> {
           ),
         ),
         title: _buildTitle(profile),
-        tileTitleAlignment: ListTileTitleAlignment.titleHeight,
       ),
     );
   }

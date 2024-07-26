@@ -1,5 +1,6 @@
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/fragments/proxies/common.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
@@ -9,7 +10,7 @@ import 'package:provider/provider.dart';
 class ProxyCard extends StatelessWidget {
   final String groupName;
   final Proxy proxy;
-  final bool isSelected;
+  final GroupType groupType;
   final CommonCardType style;
   final ProxyCardType type;
 
@@ -17,7 +18,7 @@ class ProxyCard extends StatelessWidget {
     super.key,
     required this.groupName,
     required this.proxy,
-    required this.isSelected,
+    required this.groupType,
     this.style = CommonCardType.plain,
     required this.type,
   });
@@ -28,9 +29,10 @@ class ProxyCard extends StatelessWidget {
     return SizedBox(
       height: measure.labelSmallHeight,
       child: Selector<AppState, int?>(
-        selector: (context, appState) => appState.getDelay(
-          proxy.name,
-        ),
+        selector: (context, appState) =>
+            appState.getDelay(
+              proxy.name,
+            ),
         builder: (context, delay, __) {
           return FadeBox(
             child: Builder(
@@ -92,22 +94,21 @@ class ProxyCard extends StatelessWidget {
 
   _changeProxy(BuildContext context) {
     final appController = globalState.appController;
-    final group = appController.appState.getGroupWithName(groupName)!;
-    if (group.type != GroupType.Selector) {
-      globalState.showSnackBar(
-        context,
-        message: appLocalizations.notSelectedTip,
+    if (groupType == GroupType.Selector || groupType == GroupType.URLTest) {
+      globalState.appController.config.updateCurrentSelectedMap(
+        groupName,
+        proxy.name,
+      );
+      globalState.changeProxy(
+        config: appController.config,
+        groupName: groupName,
+        proxyName: proxy.name,
       );
       return;
     }
-    globalState.appController.config.updateCurrentSelectedMap(
-      groupName,
-      proxy.name,
-    );
-    globalState.changeProxy(
-      config: appController.config,
-      groupName: groupName,
-      proxyName: proxy.name,
+    globalState.showSnackBar(
+      context,
+      message: appLocalizations.notSelectedTip,
     );
   }
 
@@ -116,75 +117,105 @@ class ProxyCard extends StatelessWidget {
     final measure = globalState.appController.measure;
     final delayText = _buildDelayText();
     final proxyNameText = _buildProxyNameText(context);
-    return CommonCard(
-      type: style,
-      key: key,
-      onPressed: () {
-        _changeProxy(context);
-      },
-      isSelected: isSelected,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return currentGroupProxyNameBuilder(
+      groupName: groupName,
+      builder: (state) {
+        final value = state.proxyName ?? state.proxyName2 ?? '';
+        return Stack(
           children: [
-            proxyNameText,
-            const SizedBox(
-              height: 8,
-            ),
-            if (type == ProxyCardType.expand) ...[
-              SizedBox(
-                height: measure.bodySmallHeight,
-                child: Selector<AppState, String>(
-                  selector: (context, appState) => appState.getDesc(
-                    proxy.type,
-                    proxy.name,
-                  ),
-                  builder: (_, desc, __) {
-                    return TooltipText(
-                      text: Text(
-                        desc,
-                        style: context.textTheme.bodySmall?.copyWith(
-                          overflow: TextOverflow.ellipsis,
-                          color: context.textTheme.bodySmall?.color?.toLight(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              delayText,
-            ] else
-              SizedBox(
-                height: measure.bodySmallHeight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            CommonCard(
+              type: style,
+              key: key,
+              onPressed: () {
+                _changeProxy(context);
+              },
+              isSelected: value == proxy.name,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(
-                      flex: 1,
-                      child: TooltipText(
-                        text: Text(
-                          proxy.type,
-                          style: context.textTheme.bodySmall?.copyWith(
-                            overflow: TextOverflow.ellipsis,
-                            color:
-                                context.textTheme.bodySmall?.color?.toLight(),
-                          ),
+                    proxyNameText,
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    if (type == ProxyCardType.expand) ...[
+                      SizedBox(
+                        height: measure.bodySmallHeight,
+                        child: Selector<AppState, String>(
+                          selector: (context, appState) =>
+                              appState.getDesc(
+                                proxy.type,
+                                proxy.name,
+                              ),
+                          builder: (_, desc, __) {
+                            return TooltipText(
+                              text: Text(
+                                desc,
+                                style: context.textTheme.bodySmall?.copyWith(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: context.textTheme.bodySmall?.color
+                                      ?.toLight(),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ),
-                    delayText,
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      delayText,
+                    ] else
+                      SizedBox(
+                        height: measure.bodySmallHeight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: TooltipText(
+                                text: Text(
+                                  proxy.type,
+                                  style: context.textTheme.bodySmall?.copyWith(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: context.textTheme.bodySmall?.color
+                                        ?.toLight(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            delayText,
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
+            ),
+            if (groupType == GroupType.URLTest && state.proxyName2 == proxy.name)
+              Positioned.fill(
+                child: Container(
+                  alignment: Alignment.topRight,
+                  margin: const EdgeInsets.all(8),
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .secondaryContainer,
+                    ),
+                    child: const SelectIcon(),
+                  ),
+                ),
+              ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -8,17 +8,23 @@ import 'package:fl_clash/state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Widget currentProxyNameBuilder({
+Widget currentGroupProxyNameBuilder({
   required String groupName,
-  required Widget Function(String) builder,
+  required Widget Function(CurrentGroupProxyNameSelectorState state) builder,
 }) {
-  return Selector2<AppState, Config, String>(
+  return Selector2<AppState, Config, CurrentGroupProxyNameSelectorState>(
     selector: (_, appState, config) {
       final group = appState.getGroupWithName(groupName);
-      return config.currentSelectedMap[groupName] ?? group?.now ?? '';
+      final isUrlTest = group?.type == GroupType.URLTest;
+      final selectedProxyName = config.currentSelectedMap[groupName];
+      final now = group?.now;
+      return CurrentGroupProxyNameSelectorState(
+        proxyName: isUrlTest ? now : selectedProxyName,
+        proxyName2: isUrlTest ? selectedProxyName : now,
+      );
     },
-    builder: (_, value, ___) {
-      return builder(value);
+    builder: (_, appState, ___) {
+      return builder(appState);
     },
   );
 }
