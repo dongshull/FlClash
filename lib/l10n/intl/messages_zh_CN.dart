@@ -170,6 +170,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("没有配置文件,请先添加配置文件"),
         "nullRequestsDesc": MessageLookupByLibrary.simpleMessage("暂无请求"),
         "oneColumn": MessageLookupByLibrary.simpleMessage("一列"),
+        "onlyStatisticsProxy": MessageLookupByLibrary.simpleMessage("仅统计代理"),
+        "onlyStatisticsProxyDesc":
+            MessageLookupByLibrary.simpleMessage("开启后，将只统计代理流量"),
         "other": MessageLookupByLibrary.simpleMessage("其他"),
         "otherContributors": MessageLookupByLibrary.simpleMessage("其他贡献者"),
         "outboundMode": MessageLookupByLibrary.simpleMessage("出站模式"),

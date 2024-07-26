@@ -848,10 +848,10 @@ packages:
     dependency: "direct main"
     description:
       name: re_editor
-      sha256: db7a82e95f0f74301e85d4d5c805a8b8a5ba43d6c0d26673b7e35dc011f06635
+      sha256: abae2b015799c936b9f9b68888e2c55007dd159b4654a85da22ce1af84efbd17
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   re_highlight:
     dependency: "direct main"
     description:

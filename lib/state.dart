@@ -72,13 +72,6 @@ class GlobalState {
     required ClashConfig clashConfig,
   }) async {
     if (!globalState.isVpnService && Platform.isAndroid) {
-      clashCore.setProps(
-        Props(
-          accessControl: config.isAccessControl ? config.accessControl : null,
-          allowBypass: config.allowBypass,
-          systemProxy: config.systemProxy,
-        ),
-      );
       await proxy?.initService();
     } else {
       await proxyManager.startProxy(
@@ -124,15 +117,6 @@ class GlobalState {
   }) async {
     appState.isInit = clashCore.isInit;
     if (!appState.isInit) {
-      if (Platform.isAndroid) {
-        clashCore.setProps(
-          Props(
-            accessControl: config.isAccessControl ? config.accessControl : null,
-            allowBypass: config.allowBypass,
-            systemProxy: config.systemProxy,
-          ),
-        );
-      }
       appState.isInit = await clashService.init(
         config: config,
         clashConfig: clashConfig,
@@ -195,7 +179,7 @@ class GlobalState {
         proxyName: proxyName,
       ),
     );
-    if(config.isCloseConnections){
+    if (config.isCloseConnections) {
       clashCore.closeConnections();
     }
   }

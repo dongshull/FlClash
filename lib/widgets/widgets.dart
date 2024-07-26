@@ -17,7 +17,7 @@ export 'animate_grid.dart';
 export 'tray_container.dart';
 export 'window_container.dart';
 export 'android_container.dart';
-export 'clash_message_container.dart';
+export 'clash_container.dart';
 export 'tile_container.dart';
 export 'chip.dart';
 export 'fade_box.dart';

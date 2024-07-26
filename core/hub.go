@@ -192,7 +192,7 @@ func changeProxy(s *C.char) {
 
 //export getTraffic
 func getTraffic() *C.char {
-	up, down := statistic.DefaultManager.Now()
+	up, down := statistic.DefaultManager.Current(state.OnlyProxy)
 	traffic := map[string]int64{
 		"up":   up,
 		"down": down,
@@ -207,7 +207,7 @@ func getTraffic() *C.char {
 
 //export getTotalTraffic
 func getTotalTraffic() *C.char {
-	up, down := statistic.DefaultManager.Total()
+	up, down := statistic.DefaultManager.Total(state.OnlyProxy)
 	traffic := map[string]int64{
 		"up":   up,
 		"down": down,

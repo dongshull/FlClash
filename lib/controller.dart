@@ -193,7 +193,6 @@ class AppController {
   }
 
   handleBackOrExit() async {
-    print(config.isMinimizeOnExit);
     if (config.isMinimizeOnExit) {
       if (system.isDesktop) {
         await savePreferences();
