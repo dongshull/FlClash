@@ -128,7 +128,7 @@ class ApplicationState extends State<Application> {
     globalState.groupsUpdateTimer ??= Timer.periodic(
       httpTimeoutDuration,
       (timer) async {
-        await globalState.appController.updateGroups();
+        await globalState.appController.updateGroupDebounce();
       },
     );
   }

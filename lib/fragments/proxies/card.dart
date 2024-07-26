@@ -92,7 +92,7 @@ class ProxyCard extends StatelessWidget {
     }
   }
 
-  _changeProxy(BuildContext context) {
+  _changeProxy(BuildContext context) async {
     final appController = globalState.appController;
     if (groupType == GroupType.Selector || groupType == GroupType.URLTest) {
       globalState.appController.config.updateCurrentSelectedMap(
@@ -104,6 +104,7 @@ class ProxyCard extends StatelessWidget {
         groupName: groupName,
         proxyName: proxy.name,
       );
+      await globalState.appController.updateGroupDebounce();
       return;
     }
     globalState.showSnackBar(

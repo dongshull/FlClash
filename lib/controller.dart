@@ -17,6 +17,7 @@ class AppController {
   late ClashConfig clashConfig;
   late Measure measure;
   late Function updateClashConfigDebounce;
+  late Function updateGroupDebounce;
   late Function addCheckIpNumDebounce;
 
   AppController(this.context) {
@@ -28,6 +29,9 @@ class AppController {
     });
     addCheckIpNumDebounce = debounce(() {
       appState.checkIpNum++;
+    });
+    updateGroupDebounce = debounce(() async {
+      await updateGroups();
     });
     measure = Measure.of(context);
   }
