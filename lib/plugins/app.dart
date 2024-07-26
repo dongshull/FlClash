@@ -5,10 +5,8 @@ import 'dart:isolate';
 
 import 'package:fl_clash/clash/clash.dart';
 import 'package:fl_clash/models/models.dart';
-import 'package:fl_clash/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class App {
   static App? _instance;
