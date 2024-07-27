@@ -114,7 +114,11 @@ func updateConfig(s *C.char, port C.longlong) {
 		configParams = params.Params
 		prof := decorationConfig(params.ProfilePath, params.Config)
 		currentConfig = prof
-		applyConfig()
+		err = applyConfig()
+		if err != nil {
+			bridge.SendToPort(i, err.Error())
+			return
+		}
 		bridge.SendToPort(i, "")
 	}()
 }

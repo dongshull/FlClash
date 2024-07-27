@@ -112,24 +112,25 @@ class AppController {
     );
   }
 
-  Future applyProfile() async {
-    final commonScaffoldState = globalState.homeScaffoldKey.currentState;
-    if (commonScaffoldState?.mounted != true) return;
-    commonScaffoldState?.loadingRun(() async {
+  Future applyProfile({bool isPrue = false}) async {
+    if (isPrue) {
       await globalState.applyProfile(
         appState: appState,
         config: config,
         clashConfig: clashConfig,
       );
-    });
-  }
-
-  Future rawApplyProfile() async {
-    await globalState.applyProfile(
-      appState: appState,
-      config: config,
-      clashConfig: clashConfig,
-    );
+    } else {
+      final commonScaffoldState = globalState.homeScaffoldKey.currentState;
+      if (commonScaffoldState?.mounted != true) return;
+      await commonScaffoldState?.loadingRun(() async {
+        await globalState.applyProfile(
+          appState: appState,
+          config: config,
+          clashConfig: clashConfig,
+        );
+      });
+    }
+    addCheckIpNumDebounce();
   }
 
   changeProfile(String? value) async {

@@ -92,7 +92,7 @@ class _ClashContainerState extends State<ClashContainer>
     super.onStarted(runTime);
     proxy?.updateStartTime();
     final appController = globalState.appController;
-    appController.rawApplyProfile().then((_) {
+    appController.applyProfile(isPrue: true).then((_) {
       appController.addCheckIpNumDebounce();
     });
   }

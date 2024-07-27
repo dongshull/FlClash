@@ -29,10 +29,9 @@ class ProxyCard extends StatelessWidget {
     return SizedBox(
       height: measure.labelSmallHeight,
       child: Selector<AppState, int?>(
-        selector: (context, appState) =>
-            appState.getDelay(
-              proxy.name,
-            ),
+        selector: (context, appState) => appState.getDelay(
+          proxy.name,
+        ),
         builder: (context, delay, __) {
           return FadeBox(
             child: Builder(
@@ -94,17 +93,25 @@ class ProxyCard extends StatelessWidget {
 
   _changeProxy(BuildContext context) async {
     final appController = globalState.appController;
-    if (groupType == GroupType.Selector || groupType == GroupType.URLTest) {
-      globalState.appController.config.updateCurrentSelectedMap(
+    final isUrlTest = groupType == GroupType.URLTest;
+    final isSelector = groupType == GroupType.Selector;
+    if (isUrlTest || isSelector) {
+      final currentProxyName =
+          appController.config.currentSelectedMap[groupName] ?? "";
+      final nextProxyName = switch (isUrlTest) {
+        true => currentProxyName.isEmpty ? proxy.name : "",
+        false => proxy.name,
+      };
+      appController.config.updateCurrentSelectedMap(
         groupName,
-        proxy.name,
+        nextProxyName,
       );
       globalState.changeProxy(
         config: appController.config,
         groupName: groupName,
-        proxyName: proxy.name,
+        proxyName: nextProxyName,
       );
-      await globalState.appController.updateGroupDebounce();
+      await appController.updateGroupDebounce();
       return;
     }
     globalState.showSnackBar(
@@ -145,11 +152,10 @@ class ProxyCard extends StatelessWidget {
                       SizedBox(
                         height: measure.bodySmallHeight,
                         child: Selector<AppState, String>(
-                          selector: (context, appState) =>
-                              appState.getDesc(
-                                proxy.type,
-                                proxy.name,
-                              ),
+                          selector: (context, appState) => appState.getDesc(
+                            proxy.type,
+                            proxy.name,
+                          ),
                           builder: (_, desc, __) {
                             return TooltipText(
                               text: Text(
@@ -196,7 +202,8 @@ class ProxyCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (groupType == GroupType.URLTest && state.proxyName2 == proxy.name)
+            if (groupType == GroupType.URLTest &&
+                state.proxyName2 == proxy.name)
               Positioned.fill(
                 child: Container(
                   alignment: Alignment.topRight,
@@ -205,10 +212,7 @@ class ProxyCard extends StatelessWidget {
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme
-                          .of(context)
-                          .colorScheme
-                          .secondaryContainer,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                     ),
                     child: const SelectIcon(),
                   ),

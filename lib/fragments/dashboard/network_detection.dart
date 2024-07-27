@@ -50,7 +50,6 @@ class _NetworkDetectionState extends State<NetworkDetection> {
       selector: (_, appState, config) {
         return CheckIpSelectorState(
           isInit: appState.isInit,
-          currentProfileId: config.currentProfileId,
           selectedMap: appState.selectedMap,
           isStart: appState.isStart,
           checkIpNum: appState.checkIpNum,

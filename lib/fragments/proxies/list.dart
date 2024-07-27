@@ -421,9 +421,7 @@ class _ListHeaderState extends State<ListHeader>
                 children: [
                   Text(
                     groupName,
-                    style: context.textTheme.titleMedium?.copyWith(
-                      color: context.colorScheme.primary,
-                    ),
+                    style: context.textTheme.titleMedium,
                   ),
                   const SizedBox(
                     height: 4,

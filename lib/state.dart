@@ -173,15 +173,15 @@ class GlobalState {
     required String groupName,
     required String proxyName,
   }) {
-    if (config.isCloseConnections) {
-      clashCore.closeConnections();
-    }
     clashCore.changeProxy(
       ChangeProxyParams(
         groupName: groupName,
         proxyName: proxyName,
       ),
     );
+    if (config.isCloseConnections) {
+      clashCore.closeConnections();
+    }
   }
 
   Future<T?> showCommonDialog<T>({

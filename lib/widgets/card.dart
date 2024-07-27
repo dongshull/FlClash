@@ -156,7 +156,6 @@ class CommonCard extends StatelessWidget {
         ],
       );
     }
-
     return OutlinedButton(
       clipBehavior: Clip.antiAlias,
       style: ButtonStyle(

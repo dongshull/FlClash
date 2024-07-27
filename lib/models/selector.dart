@@ -17,7 +17,6 @@ class StartButtonSelectorState with _$StartButtonSelectorState {
 class CheckIpSelectorState with _$CheckIpSelectorState {
   const factory CheckIpSelectorState({
     required bool isInit,
-    required String? currentProfileId,
     required bool isStart,
     required SelectedMap selectedMap,
     required num checkIpNum
