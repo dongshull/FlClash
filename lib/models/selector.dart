@@ -16,10 +16,7 @@ class StartButtonSelectorState with _$StartButtonSelectorState {
 @freezed
 class CheckIpSelectorState with _$CheckIpSelectorState {
   const factory CheckIpSelectorState({
-    required bool isInit,
-    required bool isStart,
     required SelectedMap selectedMap,
-    required num checkIpNum
   }) = _CheckIpSelectorState;
 }
 

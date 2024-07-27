@@ -97,9 +97,9 @@ class ProxyCard extends StatelessWidget {
     final isSelector = groupType == GroupType.Selector;
     if (isUrlTest || isSelector) {
       final currentProxyName =
-          appController.config.currentSelectedMap[groupName] ?? "";
+          appController.config.currentSelectedMap[groupName];
       final nextProxyName = switch (isUrlTest) {
-        true => currentProxyName.isEmpty ? proxy.name : "",
+        true => currentProxyName == proxy.name ? "" : proxy.name,
         false => proxy.name,
       };
       appController.config.updateCurrentSelectedMap(

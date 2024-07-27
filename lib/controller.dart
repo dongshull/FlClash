@@ -460,6 +460,8 @@ class AppController {
 
   String getCurrentSelectedName(String groupName) {
     final group = appState.getGroupWithName(groupName);
-    return config.currentSelectedMap[groupName] ?? group?.now ?? '';
+    return group?.getCurrentSelectedName(
+            config.currentSelectedMap[groupName] ?? '') ??
+        '';
   }
 }

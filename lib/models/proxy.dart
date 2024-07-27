@@ -21,6 +21,17 @@ class Group with _$Group {
   factory Group.fromJson(Map<String, Object?> json) => _$GroupFromJson(json);
 }
 
+extension GroupExt on Group {
+  String get realNow => now ?? "";
+
+  String getCurrentSelectedName(String proxyName) {
+    if (type == GroupType.URLTest) {
+      return realNow.isNotEmpty ? realNow : proxyName;
+    }
+    return proxyName.isNotEmpty ? proxyName : realNow;
+  }
+}
+
 @freezed
 class Proxy with _$Proxy {
   const factory Proxy({

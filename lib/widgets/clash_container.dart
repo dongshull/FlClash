@@ -19,6 +19,7 @@ class ClashContainer extends StatefulWidget {
 
 class _ClashContainerState extends State<ClashContainer>
     with AppMessageListener {
+
   Widget _updateCoreState(Widget child) {
     return Selector2<Config, ClashConfig, CoreState>(
       selector: (_, config, clashConfig) => CoreState(
@@ -36,9 +37,24 @@ class _ClashContainerState extends State<ClashContainer>
     );
   }
 
+  Widget _updateCheckIpNum(Widget child){
+    return Selector2<AppState, Config, CheckIpSelectorState>(
+      selector: (_, appState, config) {
+        return CheckIpSelectorState(
+          selectedMap: appState.selectedMap,
+        );
+      },
+      builder: (_, state, child) {
+        globalState.appController.addCheckIpNumDebounce();
+        return child!;
+      },
+      child: child,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _updateCoreState(widget.child);
+    return _updateCheckIpNum(_updateCoreState(widget.child));
   }
 
   @override
