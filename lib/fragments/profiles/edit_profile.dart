@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
@@ -5,6 +7,7 @@ import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:open_filex/open_filex.dart';
 
 class EditProfile extends StatefulWidget {
   final Profile profile;
@@ -26,6 +29,7 @@ class _EditProfileState extends State<EditProfile> {
   late TextEditingController autoUpdateDurationController;
   late bool autoUpdate;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final fileInfoNotifier = ValueNotifier<FileInfo?>(null);
 
   @override
   void initState() {
@@ -36,6 +40,10 @@ class _EditProfileState extends State<EditProfile> {
     autoUpdateDurationController = TextEditingController(
       text: widget.profile.autoUpdateDuration.inMinutes.toString(),
     );
+    appPath.getProfilePath(widget.profile.id).then((path) async {
+      if (path == null) return;
+      fileInfoNotifier.value = await _getFileInfo(path);
+    });
   }
 
   _handleConfirm() {
@@ -70,6 +78,82 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       autoUpdate = value;
     });
+  }
+
+  Future<FileInfo> _getFileInfo(path) async {
+    final file = File(path);
+    final lastModified = await file.lastModified();
+    final size = await file.length();
+    return FileInfo(
+      size: TrafficValue(value: size).show,
+      lastModified: lastModified,
+    );
+  }
+
+  String _buildFileInfoDesc(FileInfo fileInfo) {
+    return "${fileInfo.size}  ·  ${fileInfo.lastModified.lastUpdateTimeDesc}";
+  }
+
+  Widget _buildSubtitle() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          height: 4,
+        ),
+        ValueListenableBuilder<FileInfo?>(
+          valueListenable: fileInfoNotifier,
+          builder: (_, fileInfo, __) {
+            return SizedBox(
+              height: 24,
+              child: FadeBox(
+                child: fileInfo == null
+                    ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
+                        _buildFileInfoDesc(fileInfo),
+                      ),
+              ),
+            );
+          },
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Wrap(
+          runSpacing: 6,
+          spacing: 12,
+          children: [
+            CommonChip(
+              avatar: const Icon(Icons.edit),
+              label: appLocalizations.edit,
+              onPressed: () async {
+                final profilePath = await appPath.getProfilePath(widget.profile.id);
+                if (profilePath == null) return;
+                globalState.safeRun(() async {
+                  await OpenFilex.open(
+                    profilePath,
+                    type: "text/plain",
+                  );
+                });
+              },
+            ),
+            CommonChip(
+              avatar: const Icon(Icons.upload),
+              label: appLocalizations.upload,
+              onPressed: () {
+                // _updateUrl(url);
+              },
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -141,7 +225,11 @@ class _EditProfileState extends State<EditProfile> {
               },
             ),
           ),
-      ]
+      ],
+      ListItem(
+        title: const Text("配置文件"),
+        subtitle: _buildSubtitle(),
+      ),
     ];
     return FloatLayout(
       floatingWidget: FloatWrapper(
@@ -158,17 +246,23 @@ class _EditProfileState extends State<EditProfile> {
           padding: const EdgeInsets.symmetric(
             vertical: 16,
           ),
-          child: ListView.separated(
-            primary: true,
-            itemBuilder: (_, index) {
-              return items[index];
-            },
-            separatorBuilder: (_, __) {
-              return const SizedBox(
-                height: 24,
+          child: ScrollOverBuilder(
+            builder: (isOver) {
+              return ListView.separated(
+                padding: kMaterialListPadding.copyWith(
+                  bottom: isOver ? 72 : 36,
+                ),
+                itemBuilder: (_, index) {
+                  return items[index];
+                },
+                separatorBuilder: (_, __) {
+                  return const SizedBox(
+                    height: 24,
+                  );
+                },
+                itemCount: items.length,
               );
             },
-            itemCount: items.length,
           ),
         ),
       ),

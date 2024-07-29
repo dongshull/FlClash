@@ -144,11 +144,13 @@ class GlobalState {
               width: 300,
               constraints: const BoxConstraints(maxHeight: 200),
               child: SingleChildScrollView(
-                child: RichText(
-                  overflow: TextOverflow.visible,
-                  text: TextSpan(
+                child: SelectableText.rich(
+                  TextSpan(
                     style: Theme.of(context).textTheme.labelLarge,
                     children: [message],
+                  ),
+                  style: const TextStyle(
+                    overflow: TextOverflow.visible,
                   ),
                 ),
               ),

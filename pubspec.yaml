@@ -43,6 +43,7 @@ dependencies:
   win32: ^5.5.1
   ffi: ^2.1.2
   material_color_utilities: ^0.8.0
+  open_filex: ^4.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

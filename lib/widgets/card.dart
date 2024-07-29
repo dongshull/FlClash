@@ -80,6 +80,7 @@ class CommonCard extends StatelessWidget {
     this.onPressed,
     this.info,
     this.selectWidget,
+    this.radius = 12,
     required this.child,
   }) : isSelected = isSelected ?? false;
 
@@ -89,6 +90,7 @@ class CommonCard extends StatelessWidget {
   final Widget child;
   final Info? info;
   final CommonCardType type;
+  final double radius;
 
   BorderSide getBorderSide(BuildContext context, Set<WidgetState> states) {
     if (type == CommonCardType.filled) {
@@ -162,7 +164,7 @@ class CommonCard extends StatelessWidget {
         padding: const WidgetStatePropertyAll(EdgeInsets.zero),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         backgroundColor: WidgetStateProperty.resolveWith(
