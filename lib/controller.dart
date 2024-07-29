@@ -388,6 +388,10 @@ class AppController {
 
   addProfileFormFile() async {
     final platformFile = await globalState.safeRun(picker.pickerConfigFile);
+    final bytes = platformFile?.bytes;
+    if (bytes == null) {
+      return null;
+    }
     if (!context.mounted) return;
     globalState.navigatorKey.currentState?.popUntil((route) => route.isFirst);
     toProfiles();
@@ -396,10 +400,6 @@ class AppController {
     final profile = await commonScaffoldState?.loadingRun<Profile?>(
       () async {
         await Future.delayed(const Duration(milliseconds: 300));
-        final bytes = platformFile?.bytes;
-        if (bytes == null) {
-          return null;
-        }
         return await Profile.normal(label: platformFile?.name).saveFile(bytes);
       },
       title: "${appLocalizations.add}${appLocalizations.profile}",

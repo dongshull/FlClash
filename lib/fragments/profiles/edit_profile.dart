@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
@@ -30,6 +31,7 @@ class _EditProfileState extends State<EditProfile> {
   late bool autoUpdate;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final fileInfoNotifier = ValueNotifier<FileInfo?>(null);
+  Uint8List? fileData;
 
   @override
   void initState() {
@@ -46,10 +48,10 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  _handleConfirm() {
+  _handleConfirm() async {
     if (!_formKey.currentState!.validate()) return;
     final config = widget.context.read<Config>();
-    final profile = widget.profile.copyWith(
+    var profile = widget.profile.copyWith(
       url: urlController.text,
       label: labelController.text,
       autoUpdate: autoUpdate,
@@ -60,7 +62,11 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
     final hasUpdate = widget.profile.url != profile.url;
-    config.setProfile(profile);
+    if (fileData != null) {
+      config.setProfile(await profile.saveFile(fileData!));
+    } else {
+      config.setProfile(profile);
+    }
     if (hasUpdate) {
       globalState.homeScaffoldKey.currentState?.loadingRun(
         () async {
@@ -70,7 +76,9 @@ class _EditProfileState extends State<EditProfile> {
         },
       );
     }
-    Navigator.of(context).pop();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   _setAutoUpdate(bool value) {
@@ -85,13 +93,30 @@ class _EditProfileState extends State<EditProfile> {
     final lastModified = await file.lastModified();
     final size = await file.length();
     return FileInfo(
-      size: TrafficValue(value: size).show,
+      size: size,
       lastModified: lastModified,
     );
   }
 
-  String _buildFileInfoDesc(FileInfo fileInfo) {
-    return "${fileInfo.size}  ·  ${fileInfo.lastModified.lastUpdateTimeDesc}";
+  _editProfileFile() async {
+    final profilePath = await appPath.getProfilePath(widget.profile.id);
+    if (profilePath == null) return;
+    globalState.safeRun(() async {
+      await OpenFilex.open(
+        profilePath,
+        type: "text/plain",
+      );
+    });
+  }
+
+  _uploadProfileFile() async {
+    final platformFile = await globalState.safeRun(picker.pickerConfigFile);
+    if (platformFile?.bytes == null) return;
+    fileData = platformFile?.bytes;
+    fileInfoNotifier.value = fileInfoNotifier.value?.copyWith(
+      size: fileData?.length ?? 0,
+      lastModified: DateTime.now(),
+    );
   }
 
   Widget _buildSubtitle() {
@@ -104,19 +129,20 @@ class _EditProfileState extends State<EditProfile> {
         ValueListenableBuilder<FileInfo?>(
           valueListenable: fileInfoNotifier,
           builder: (_, fileInfo, __) {
+            final height = globalState.appController.measure.bodyMediumHeight + 4;
             return SizedBox(
-              height: 24,
+              height: height,
               child: FadeBox(
                 child: fileInfo == null
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(
+                    ? SizedBox(
+                        width: height,
+                        height: height,
+                        child: const CircularProgressIndicator(
                           strokeWidth: 2,
                         ),
                       )
                     : Text(
-                        _buildFileInfoDesc(fileInfo),
+                        fileInfo.desc,
                       ),
               ),
             );
@@ -132,23 +158,12 @@ class _EditProfileState extends State<EditProfile> {
             CommonChip(
               avatar: const Icon(Icons.edit),
               label: appLocalizations.edit,
-              onPressed: () async {
-                final profilePath = await appPath.getProfilePath(widget.profile.id);
-                if (profilePath == null) return;
-                globalState.safeRun(() async {
-                  await OpenFilex.open(
-                    profilePath,
-                    type: "text/plain",
-                  );
-                });
-              },
+              onPressed: _editProfileFile,
             ),
             CommonChip(
               avatar: const Icon(Icons.upload),
               label: appLocalizations.upload,
-              onPressed: () {
-                // _updateUrl(url);
-              },
+              onPressed: _uploadProfileFile,
             ),
           ],
         ),
