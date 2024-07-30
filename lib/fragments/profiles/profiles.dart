@@ -52,15 +52,15 @@ class _ProfilesFragmentState extends State<ProfilesFragment> {
 
   _updateProfiles() async {
     final updateProfiles = profileItemKeys.map<Future>(
-            (key) async => await key.currentState?.updateProfile(false));
+        (key) async => await key.currentState?.updateProfile(false));
     await Future.wait(updateProfiles);
   }
 
   _initScaffoldState() {
     WidgetsBinding.instance.addPostFrameCallback(
-          (_) {
+      (_) {
         final commonScaffoldState =
-        context.findAncestorStateOfType<CommonScaffoldState>();
+            context.findAncestorStateOfType<CommonScaffoldState>();
         if (!context.mounted) return;
         commonScaffoldState?.actions = [
           IconButton(
@@ -108,12 +108,11 @@ class _ProfilesFragmentState extends State<ProfilesFragment> {
           return child!;
         },
         child: Selector2<AppState, Config, ProfilesSelectorState>(
-          selector: (_, appState, config) =>
-              ProfilesSelectorState(
-                profiles: config.profiles,
-                currentProfileId: config.currentProfileId,
-                viewMode: appState.viewMode,
-              ),
+          selector: (_, appState, config) => ProfilesSelectorState(
+            profiles: config.profiles,
+            currentProfileId: config.currentProfileId,
+            viewMode: appState.viewMode,
+          ),
           builder: (context, state, child) {
             if (state.profiles.isEmpty) {
               return NullStatus(
@@ -195,8 +194,7 @@ class _ProfileItemState extends State<ProfileItem> {
     try {
       final appController = globalState.appController;
       await appController.updateProfile(widget.profile);
-      if (widget.profile.id == appController.config.currentProfile?.id &&
-          !appController.appState.isStart) {
+      if (widget.profile.id == appController.config.currentProfile?.id) {
         globalState.appController.applyProfile(isPrue: true);
       }
     } catch (e) {
@@ -267,9 +265,8 @@ class _ProfileItemState extends State<ProfileItem> {
             final progress = total == 0 ? 0.0 : use / total;
             final expireShow = userInfo.expire == 0
                 ? appLocalizations.infiniteTime
-                : DateTime
-                .fromMillisecondsSinceEpoch(userInfo.expire * 1000)
-                .show;
+                : DateTime.fromMillisecondsSinceEpoch(userInfo.expire * 1000)
+                    .show;
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,44 +333,44 @@ class _ProfileItemState extends State<ProfileItem> {
               return FadeBox(
                 child: isUpdating
                     ? const Padding(
-                  padding: EdgeInsets.all(8),
-                  child: CircularProgressIndicator(),
-                )
+                        padding: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(),
+                      )
                     : CommonPopupMenu<ProfileActions>(
-                  items: [
-                    CommonPopupMenuItem(
-                      action: ProfileActions.edit,
-                      label: appLocalizations.edit,
-                      iconData: Icons.edit,
-                    ),
-                    if (profile.type == ProfileType.url)
-                      CommonPopupMenuItem(
-                        action: ProfileActions.update,
-                        label: appLocalizations.update,
-                        iconData: Icons.sync,
+                        items: [
+                          CommonPopupMenuItem(
+                            action: ProfileActions.edit,
+                            label: appLocalizations.edit,
+                            iconData: Icons.edit,
+                          ),
+                          if (profile.type == ProfileType.url)
+                            CommonPopupMenuItem(
+                              action: ProfileActions.update,
+                              label: appLocalizations.update,
+                              iconData: Icons.sync,
+                            ),
+                          CommonPopupMenuItem(
+                            action: ProfileActions.delete,
+                            label: appLocalizations.delete,
+                            iconData: Icons.delete,
+                          ),
+                        ],
+                        onSelected: (ProfileActions? action) async {
+                          switch (action) {
+                            case ProfileActions.edit:
+                              _handleShowEditExtendPage();
+                              break;
+                            case ProfileActions.delete:
+                              _handleDeleteProfile();
+                              break;
+                            case ProfileActions.update:
+                              _handleUpdateProfile();
+                              break;
+                            case null:
+                              break;
+                          }
+                        },
                       ),
-                    CommonPopupMenuItem(
-                      action: ProfileActions.delete,
-                      label: appLocalizations.delete,
-                      iconData: Icons.delete,
-                    ),
-                  ],
-                  onSelected: (ProfileActions? action) async {
-                    switch (action) {
-                      case ProfileActions.edit:
-                        _handleShowEditExtendPage();
-                        break;
-                      case ProfileActions.delete:
-                        _handleDeleteProfile();
-                        break;
-                      case ProfileActions.update:
-                        _handleUpdateProfile();
-                        break;
-                      case null:
-                        break;
-                    }
-                  },
-                ),
               );
             },
           ),

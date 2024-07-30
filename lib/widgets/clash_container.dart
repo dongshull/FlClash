@@ -1,6 +1,5 @@
 import 'package:fl_clash/clash/clash.dart';
 import 'package:fl_clash/models/models.dart';
-import 'package:fl_clash/plugins/app.dart';
 import 'package:fl_clash/plugins/proxy.dart';
 import 'package:fl_clash/state.dart';
 import 'package:flutter/material.dart';
@@ -38,12 +37,11 @@ class _ClashContainerState extends State<ClashContainer>
   }
 
   Widget _updateCheckIpNum(Widget child) {
-    return Selector<AppState, CheckIpSelectorState>(
-      selector: (_, appState) {
+    return Selector2<AppState,Config, CheckIpSelectorState>(
+      selector: (_, appState,config) {
         return CheckIpSelectorState(
-          isInit: appState.isInit,
-          isStart: appState.isStart,
           selectedMap: appState.selectedMap,
+          currentProfileId: config.currentProfileId,
         );
       },
       builder: (_, state, child) {

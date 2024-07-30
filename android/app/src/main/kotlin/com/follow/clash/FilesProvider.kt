@@ -20,6 +20,7 @@ class FilesProvider : DocumentsProvider() {
             Document.COLUMN_DOCUMENT_ID,
             Document.COLUMN_DISPLAY_NAME,
             Document.COLUMN_MIME_TYPE,
+            Document.COLUMN_FLAGS,
             Document.COLUMN_SIZE,
         )
         private val DEFAULT_ROOT_COLUMNS = arrayOf(
@@ -89,6 +90,10 @@ class FilesProvider : DocumentsProvider() {
             add(Document.COLUMN_DOCUMENT_ID, file.absolutePath)
             add(Document.COLUMN_DISPLAY_NAME, file.name)
             add(Document.COLUMN_SIZE, file.length())
+            add(
+                Document.COLUMN_FLAGS,
+                Document.FLAG_SUPPORTS_WRITE or Document.FLAG_SUPPORTS_DELETE
+            )
             add(Document.COLUMN_MIME_TYPE, getDocumentType(file))
         }
     }

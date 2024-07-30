@@ -48,7 +48,8 @@ class _NetworkDetectionState extends State<NetworkDetection> {
       selector: (_, appState) {
         return appState.checkIpNum;
       },
-      builder: (_, state, child) {
+      builder: (_, checkIpNum, child) {
+        print("checkIpNum ===> $checkIpNum");
         if (_checkIpDebounce != null) {
           _checkIpDebounce!();
         }
@@ -67,6 +68,7 @@ class _NetworkDetectionState extends State<NetworkDetection> {
 
   @override
   Widget build(BuildContext context) {
+    print("dadadaad");
     _checkIpDebounce = debounce(_checkIp);
     return _checkIpContainer(
       ValueListenableBuilder<IpInfo?>(

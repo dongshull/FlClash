@@ -158,8 +158,7 @@ abstract class _StartButtonSelectorState implements StartButtonSelectorState {
 
 /// @nodoc
 mixin _$CheckIpSelectorState {
-  bool get isInit => throw _privateConstructorUsedError;
-  bool get isStart => throw _privateConstructorUsedError;
+  String? get currentProfileId => throw _privateConstructorUsedError;
   Map<String, String> get selectedMap => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -173,7 +172,7 @@ abstract class $CheckIpSelectorStateCopyWith<$Res> {
           $Res Function(CheckIpSelectorState) then) =
       _$CheckIpSelectorStateCopyWithImpl<$Res, CheckIpSelectorState>;
   @useResult
-  $Res call({bool isInit, bool isStart, Map<String, String> selectedMap});
+  $Res call({String? currentProfileId, Map<String, String> selectedMap});
 }
 
 /// @nodoc
@@ -190,19 +189,14 @@ class _$CheckIpSelectorStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isInit = null,
-    Object? isStart = null,
+    Object? currentProfileId = freezed,
     Object? selectedMap = null,
   }) {
     return _then(_value.copyWith(
-      isInit: null == isInit
-          ? _value.isInit
-          : isInit // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isStart: null == isStart
-          ? _value.isStart
-          : isStart // ignore: cast_nullable_to_non_nullable
-              as bool,
+      currentProfileId: freezed == currentProfileId
+          ? _value.currentProfileId
+          : currentProfileId // ignore: cast_nullable_to_non_nullable
+              as String?,
       selectedMap: null == selectedMap
           ? _value.selectedMap
           : selectedMap // ignore: cast_nullable_to_non_nullable
@@ -219,7 +213,7 @@ abstract class _$$CheckIpSelectorStateImplCopyWith<$Res>
       __$$CheckIpSelectorStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isInit, bool isStart, Map<String, String> selectedMap});
+  $Res call({String? currentProfileId, Map<String, String> selectedMap});
 }
 
 /// @nodoc
@@ -233,19 +227,14 @@ class __$$CheckIpSelectorStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isInit = null,
-    Object? isStart = null,
+    Object? currentProfileId = freezed,
     Object? selectedMap = null,
   }) {
     return _then(_$CheckIpSelectorStateImpl(
-      isInit: null == isInit
-          ? _value.isInit
-          : isInit // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isStart: null == isStart
-          ? _value.isStart
-          : isStart // ignore: cast_nullable_to_non_nullable
-              as bool,
+      currentProfileId: freezed == currentProfileId
+          ? _value.currentProfileId
+          : currentProfileId // ignore: cast_nullable_to_non_nullable
+              as String?,
       selectedMap: null == selectedMap
           ? _value._selectedMap
           : selectedMap // ignore: cast_nullable_to_non_nullable
@@ -258,15 +247,12 @@ class __$$CheckIpSelectorStateImplCopyWithImpl<$Res>
 
 class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
   const _$CheckIpSelectorStateImpl(
-      {required this.isInit,
-      required this.isStart,
+      {required this.currentProfileId,
       required final Map<String, String> selectedMap})
       : _selectedMap = selectedMap;
 
   @override
-  final bool isInit;
-  @override
-  final bool isStart;
+  final String? currentProfileId;
   final Map<String, String> _selectedMap;
   @override
   Map<String, String> get selectedMap {
@@ -277,7 +263,7 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
 
   @override
   String toString() {
-    return 'CheckIpSelectorState(isInit: $isInit, isStart: $isStart, selectedMap: $selectedMap)';
+    return 'CheckIpSelectorState(currentProfileId: $currentProfileId, selectedMap: $selectedMap)';
   }
 
   @override
@@ -285,14 +271,14 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CheckIpSelectorStateImpl &&
-            (identical(other.isInit, isInit) || other.isInit == isInit) &&
-            (identical(other.isStart, isStart) || other.isStart == isStart) &&
+            (identical(other.currentProfileId, currentProfileId) ||
+                other.currentProfileId == currentProfileId) &&
             const DeepCollectionEquality()
                 .equals(other._selectedMap, _selectedMap));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isInit, isStart,
+  int get hashCode => Object.hash(runtimeType, currentProfileId,
       const DeepCollectionEquality().hash(_selectedMap));
 
   @JsonKey(ignore: true)
@@ -306,15 +292,12 @@ class _$CheckIpSelectorStateImpl implements _CheckIpSelectorState {
 
 abstract class _CheckIpSelectorState implements CheckIpSelectorState {
   const factory _CheckIpSelectorState(
-          {required final bool isInit,
-          required final bool isStart,
+          {required final String? currentProfileId,
           required final Map<String, String> selectedMap}) =
       _$CheckIpSelectorStateImpl;
 
   @override
-  bool get isInit;
-  @override
-  bool get isStart;
+  String? get currentProfileId;
   @override
   Map<String, String> get selectedMap;
   @override

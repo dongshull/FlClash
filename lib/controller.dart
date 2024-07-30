@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/state.dart';
@@ -49,12 +50,16 @@ class AppController {
         updateRunTime,
         updateTraffic,
       ];
+      if (Platform.isAndroid) return;
+      await applyProfile(isPrue: true);
+      addCheckIpNumDebounce();
     } else {
       await globalState.stopSystemProxy();
       clashCore.resetTraffic();
       appState.traffics = [];
       appState.totalTraffic = Traffic();
       appState.runTime = null;
+      addCheckIpNumDebounce();
     }
   }
 
@@ -130,7 +135,6 @@ class AppController {
         );
       });
     }
-    addCheckIpNumDebounce();
   }
 
   changeProfile(String? value) async {

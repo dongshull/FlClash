@@ -4,11 +4,12 @@ import 'dart:typed_data';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
+import 'package:fl_clash/plugins/app.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:open_filex/open_filex.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EditProfile extends StatefulWidget {
   final Profile profile;
@@ -102,9 +103,16 @@ class _EditProfileState extends State<EditProfile> {
     final profilePath = await appPath.getProfilePath(widget.profile.id);
     if (profilePath == null) return;
     globalState.safeRun(() async {
-      await OpenFilex.open(
-        profilePath,
-        type: "text/plain",
+      if (Platform.isAndroid) {
+        await app?.openFile(
+          profilePath,
+        );
+        return;
+      }
+      await launchUrl(
+        Uri.file(
+          profilePath,
+        ),
       );
     });
   }
@@ -129,7 +137,8 @@ class _EditProfileState extends State<EditProfile> {
         ValueListenableBuilder<FileInfo?>(
           valueListenable: fileInfoNotifier,
           builder: (_, fileInfo, __) {
-            final height = globalState.appController.measure.bodyMediumHeight + 4;
+            final height =
+                globalState.appController.measure.bodyMediumHeight + 4;
             return SizedBox(
               height: height,
               child: FadeBox(

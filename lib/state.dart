@@ -79,16 +79,6 @@ class GlobalState {
       );
     }
     startListenUpdate();
-    if (Platform.isAndroid) {
-      return;
-    }
-    applyProfile(
-      appState: appState,
-      config: config,
-      clashConfig: clashConfig,
-    ).then((_) {
-      globalState.appController.addCheckIpNumDebounce();
-    });
   }
 
   Future<void> stopSystemProxy() async {
