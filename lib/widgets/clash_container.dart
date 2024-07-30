@@ -36,25 +36,9 @@ class _ClashContainerState extends State<ClashContainer>
     );
   }
 
-  Widget _updateCheckIpNum(Widget child) {
-    return Selector2<AppState,Config, CheckIpSelectorState>(
-      selector: (_, appState,config) {
-        return CheckIpSelectorState(
-          selectedMap: appState.selectedMap,
-          currentProfileId: config.currentProfileId,
-        );
-      },
-      builder: (_, state, child) {
-        globalState.appController.addCheckIpNumDebounce();
-        return child!;
-      },
-      child: child,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return _updateCheckIpNum(_updateCoreState(widget.child));
+    return _updateCoreState(widget.child);
   }
 
   @override
@@ -94,22 +78,19 @@ class _ClashContainerState extends State<ClashContainer>
     final currentSelectedMap = appController.config.currentSelectedMap;
     final proxyName = currentSelectedMap[groupName];
     if (proxyName == null) return;
-    globalState.changeProxy(
-      config: appController.config,
+    appController.changeProxy(
       groupName: groupName,
       proxyName: proxyName,
     );
-    appController.addCheckIpNumDebounce();
     super.onLoaded(proxyName);
   }
 
   @override
-  void onStarted(String runTime) {
+  Future<void> onStarted(String runTime) async {
     super.onStarted(runTime);
     proxy?.updateStartTime();
     final appController = globalState.appController;
-    appController.applyProfile(isPrue: true).then((_) {
-      appController.addCheckIpNumDebounce();
-    });
+    await appController.applyProfile(isPrue: true);
+    appController.addCheckIpNumDebounce();
   }
 }

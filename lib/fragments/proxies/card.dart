@@ -106,8 +106,7 @@ class ProxyCard extends StatelessWidget {
         groupName,
         nextProxyName,
       );
-      globalState.changeProxy(
-        config: appController.config,
+      appController.changeProxy(
         groupName: groupName,
         proxyName: nextProxyName,
       );

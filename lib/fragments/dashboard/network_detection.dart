@@ -22,15 +22,18 @@ class _NetworkDetectionState extends State<NetworkDetection> {
   Function? _checkIpDebounce;
 
   _checkIp() async {
-    final isInit = globalState.appController.appState.isInit;
-    final isStart = globalState.appController.appState.isStart;
+    final appState = globalState.appController.appState;
+    final isInit = appState.isInit;
+    final isStart = appState.isStart;
     if (!isInit) return;
     timeoutNotifier.value = false;
     if (_preIsStart == false && _preIsStart == isStart) return;
+    _preIsStart = isStart;
     if (cancelToken != null) {
       cancelToken!.cancel();
       cancelToken = null;
     }
+    cancelToken = CancelToken();
     ipInfoNotifier.value = null;
     final ipInfo = await request.checkIp(cancelToken);
     if (ipInfo == null) {
@@ -39,7 +42,6 @@ class _NetworkDetectionState extends State<NetworkDetection> {
     } else {
       timeoutNotifier.value = false;
     }
-    _preIsStart = isStart;
     ipInfoNotifier.value = ipInfo;
   }
 
@@ -49,7 +51,6 @@ class _NetworkDetectionState extends State<NetworkDetection> {
         return appState.checkIpNum;
       },
       builder: (_, checkIpNum, child) {
-        print("checkIpNum ===> $checkIpNum");
         if (_checkIpDebounce != null) {
           _checkIpDebounce!();
         }
@@ -68,7 +69,6 @@ class _NetworkDetectionState extends State<NetworkDetection> {
 
   @override
   Widget build(BuildContext context) {
-    print("dadadaad");
     _checkIpDebounce = debounce(_checkIp);
     return _checkIpContainer(
       ValueListenableBuilder<IpInfo?>(

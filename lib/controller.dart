@@ -52,7 +52,6 @@ class AppController {
       ];
       if (Platform.isAndroid) return;
       await applyProfile(isPrue: true);
-      addCheckIpNumDebounce();
     } else {
       await globalState.stopSystemProxy();
       clashCore.resetTraffic();
@@ -135,6 +134,7 @@ class AppController {
         );
       });
     }
+    addCheckIpNumDebounce();
   }
 
   changeProfile(String? value) async {
@@ -199,6 +199,18 @@ class AppController {
   saveClashConfigPreferences() async {
     debugPrint("saveClashConfigPreferences");
     await preferences.saveClashConfig(clashConfig);
+  }
+
+  changeProxy({
+    required String groupName,
+    required String proxyName,
+  }) {
+    globalState.changeProxy(
+      config: config,
+      groupName: groupName,
+      proxyName: proxyName,
+    );
+    addCheckIpNumDebounce();
   }
 
   handleBackOrExit() async {
