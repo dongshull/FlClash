@@ -145,7 +145,6 @@ class ClashCore {
           .map(
             (e) => Group.fromJson(e),
           )
-          .where((group) => group.hidden == false)
           .toList();
     });
   }

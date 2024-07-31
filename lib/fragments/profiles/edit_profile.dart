@@ -251,7 +251,7 @@ class _EditProfileState extends State<EditProfile> {
           ),
       ],
       ListItem(
-        title: const Text("配置文件"),
+        title: Text(appLocalizations.profile),
         subtitle: _buildSubtitle(),
       ),
     ];

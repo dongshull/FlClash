@@ -18,7 +18,6 @@ class _NetworkDetectionState extends State<NetworkDetection> {
   final ipInfoNotifier = ValueNotifier<IpInfo?>(null);
   final timeoutNotifier = ValueNotifier<bool>(false);
   bool? _preIsStart;
-  CancelToken? cancelToken;
   Function? _checkIpDebounce;
 
   _checkIp() async {
@@ -29,13 +28,8 @@ class _NetworkDetectionState extends State<NetworkDetection> {
     timeoutNotifier.value = false;
     if (_preIsStart == false && _preIsStart == isStart) return;
     _preIsStart = isStart;
-    if (cancelToken != null) {
-      cancelToken!.cancel();
-      cancelToken = null;
-    }
-    cancelToken = CancelToken();
     ipInfoNotifier.value = null;
-    final ipInfo = await request.checkIp(cancelToken);
+    final ipInfo = await request.checkIp();
     if (ipInfo == null) {
       timeoutNotifier.value = true;
       return;

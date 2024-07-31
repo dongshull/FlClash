@@ -441,20 +441,18 @@ class _ListHeaderState extends State<ListHeader>
                           flex: 1,
                           child: currentGroupProxyNameBuilder(
                             groupName: groupName,
-                            builder: (state) {
-                              final value =
-                                  state.proxyName ?? state.proxyName2 ?? '';
+                            builder: (currentGroupName) {
                               return Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  if (value.isNotEmpty) ...[
+                                  if (currentGroupName.isNotEmpty) ...[
                                     Flexible(
                                       flex: 1,
                                       child: Text(
                                         overflow: TextOverflow.ellipsis,
-                                        " · $value",
+                                        " · $currentGroupName",
                                         style: context
                                             .textTheme.labelMedium?.toLight,
                                       ),

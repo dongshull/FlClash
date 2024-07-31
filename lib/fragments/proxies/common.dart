@@ -10,21 +10,16 @@ import 'package:provider/provider.dart';
 
 Widget currentGroupProxyNameBuilder({
   required String groupName,
-  required Widget Function(CurrentGroupProxyNameSelectorState state) builder,
+  required Widget Function(String currentGroupName) builder,
 }) {
-  return Selector2<AppState, Config, CurrentGroupProxyNameSelectorState>(
+  return Selector2<AppState, Config, String>(
     selector: (_, appState, config) {
       final group = appState.getGroupWithName(groupName);
-      final isUrlTest = group?.type == GroupType.URLTest;
       final selectedProxyName = config.currentSelectedMap[groupName];
-      final now = group?.now;
-      return CurrentGroupProxyNameSelectorState(
-        proxyName: isUrlTest ? now : selectedProxyName,
-        proxyName2: isUrlTest ? selectedProxyName : now,
-      );
+      return group?.getCurrentSelectedName(selectedProxyName ?? "") ?? "";
     },
-    builder: (_, appState, ___) {
-      return builder(appState);
+    builder: (_, currentGroupName, ___) {
+      return builder(currentGroupName);
     },
   );
 }
@@ -48,8 +43,7 @@ double getItemHeight(ProxyCardType proxyCardType) {
 delayTest(List<Proxy> proxies) async {
   final appController = globalState.appController;
   for (final proxy in proxies) {
-    final proxyName =
-        appController.appState.getRealProxyName(proxy.name) ?? proxy.name;
+    final proxyName = appController.appState.getRealProxyName(proxy.name);
     globalState.appController.setDelay(
       Delay(
         name: proxyName,

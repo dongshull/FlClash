@@ -115,6 +115,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "delay": MessageLookupByLibrary.simpleMessage("Delay"),
         "delaySort": MessageLookupByLibrary.simpleMessage("Sort by delay"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteProfileTip": MessageLookupByLibrary.simpleMessage(
+            "Sure you want to delete the current profile?"),
         "desc": MessageLookupByLibrary.simpleMessage(
             "A multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free."),
         "direct": MessageLookupByLibrary.simpleMessage("Direct"),

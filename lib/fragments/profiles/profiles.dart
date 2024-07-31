@@ -182,7 +182,15 @@ class _ProfileItemState extends State<ProfileItem> {
   final isUpdating = ValueNotifier<bool>(false);
 
   _handleDeleteProfile() async {
-    globalState.appController.deleteProfile(widget.profile.id);
+    globalState.showMessage(
+      title: appLocalizations.tip,
+      message: TextSpan(
+        text: appLocalizations.deleteProfileTip,
+      ),
+      onTab: () {
+        globalState.appController.deleteProfile(widget.profile.id);
+      },
+    );
   }
 
   _handleUpdateProfile() async {
@@ -219,16 +227,6 @@ class _ProfileItemState extends State<ProfileItem> {
       title: "${appLocalizations.edit}${appLocalizations.profile}",
     );
   }
-
-  // _handleViewProfile() {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (context) => ViewProfile(
-  //         profile: widget.profile,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   _buildTitle(Profile profile) {
     final textTheme = context.textTheme;

@@ -295,6 +295,7 @@ class AppState with ChangeNotifier {
             .toList();
       case Mode.rule:
         return groups
+            .where((item) => item.hidden == false)
             .where((element) => element.name != GroupName.GLOBAL.name)
             .toList();
     }

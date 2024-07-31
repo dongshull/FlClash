@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "delay": MessageLookupByLibrary.simpleMessage("延迟"),
         "delaySort": MessageLookupByLibrary.simpleMessage("按延迟排序"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
+        "deleteProfileTip": MessageLookupByLibrary.simpleMessage("确定要删除当前配置吗?"),
         "desc": MessageLookupByLibrary.simpleMessage(
             "基于ClashMeta的多平台代理客户端，简单易用，开源无广告。"),
         "direct": MessageLookupByLibrary.simpleMessage("直连"),

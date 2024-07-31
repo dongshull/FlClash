@@ -126,8 +126,7 @@ class ProxyCard extends StatelessWidget {
     final proxyNameText = _buildProxyNameText(context);
     return currentGroupProxyNameBuilder(
       groupName: groupName,
-      builder: (state) {
-        final value = state.proxyName ?? state.proxyName2 ?? '';
+      builder: (currentGroupName) {
         return Stack(
           children: [
             CommonCard(
@@ -136,7 +135,7 @@ class ProxyCard extends StatelessWidget {
               onPressed: () {
                 _changeProxy(context);
               },
-              isSelected: value == proxy.name,
+              isSelected: currentGroupName == proxy.name,
               child: Container(
                 padding: const EdgeInsets.all(12),
                 child: Column(
@@ -201,22 +200,46 @@ class ProxyCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (groupType == GroupType.URLTest &&
-                state.proxyName2 == proxy.name)
-              Positioned.fill(
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.all(8),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.secondaryContainer,
+            if (groupType == GroupType.URLTest)
+              Selector<Config, String>(
+                selector: (_, config) {
+                  final selectedProxyName =
+                      config.currentSelectedMap[groupName];
+                  return selectedProxyName ?? '';
+                },
+                builder: (_, value, __) {
+                  if (value != proxy.name) return Container();
+                  return Positioned.fill(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      margin: const EdgeInsets.all(8),
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                        ),
+                        child: const SelectIcon(),
+                      ),
                     ),
-                    child: const SelectIcon(),
+                  );
+                },
+                child: Positioned.fill(
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    margin: const EdgeInsets.all(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                      ),
+                      child: const SelectIcon(),
+                    ),
                   ),
                 ),
-              ),
+              )
           ],
         );
       },

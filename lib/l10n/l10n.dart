@@ -2249,6 +2249,16 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Sure you want to delete the current profile?`
+  String get deleteProfileTip {
+    return Intl.message(
+      'Sure you want to delete the current profile?',
+      name: 'deleteProfileTip',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
